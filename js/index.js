@@ -591,6 +591,31 @@ function createTravelModeDown(jsonTrvlModeArr){
 	});
 } 
 
+
+function createTravelModeDownForTS(jsonTrvlModeArr){
+	var jsonArr = [];
+	if(jsonTrvlModeArr != null && jsonTrvlModeArr.length > 0){
+		for(var i=0; i<jsonTrvlModeArr.length; i++ ){
+			var stateArr = new Array();
+			stateArr = jsonTrvlModeArr[i];
+			
+			jsonArr.push({id: stateArr.Value,name: stateArr.Label});
+		}
+	}
+		
+	j("#travelModeForTS").select2({
+		data:{ results: jsonArr, text: 'name' },
+		placeholder: "Travel Mode",
+		minimumResultsForSearch: -1,
+		formatResult: function(result) {
+			if ( ! isJsonString(result.id))
+				result.id = JSON.stringify(result.id);
+				return result.name;
+		}
+	});
+	
+} 
+
 function createCategoryDropDown(jsonCategoryArr){
 	var jsonArr = [];
 	if(jsonCategoryArr != null && jsonCategoryArr.length > 0){
@@ -622,7 +647,28 @@ function createCategoryDropDown(jsonCategoryArr){
 				return result.name;
 		}
 	});
-} 
+}
+function createCategoryDropDownForTS(jsonCategoryArr){
+	var jsonArr = [];
+	if(jsonCategoryArr != null && jsonCategoryArr.length > 0){
+		for(var i=0; i<jsonCategoryArr.length; i++ ){
+			var stateArr = new Array();
+			stateArr = jsonCategoryArr[i];
+			jsonArr.push({id: stateArr.Value,name: stateArr.Label});
+		}
+	}
+		
+	j("#travelCategoryForTS").select2({
+		data:{ results: jsonArr, text: 'name' },
+		placeholder: "Travel Category",
+		minimumResultsForSearch: -1,
+		formatResult: function(result) {
+			if ( ! isJsonString(result.id))
+				result.id = JSON.stringify(result.id);
+				return result.name;
+		}
+	});
+}
 
 function createCitytownDropDown(jsonCityTownArr){
 	var jsonArr = [];
@@ -655,6 +701,29 @@ function createCitytownDropDown(jsonCityTownArr){
 				return result.name;
 		}
 	});
+} 
+
+function createCitytownDropDownForTS(jsonCityTownArr){
+	var jsonArr = [];
+	if(jsonCityTownArr != null && jsonCityTownArr.length > 0){
+		for(var i=0; i<jsonCityTownArr.length; i++ ){
+			var stateArr = new Array();
+			stateArr = jsonCityTownArr[i];
+			jsonArr.push({id: stateArr.Value,name: stateArr.Label});
+		}
+	}
+		
+	j("#Citytown").select2({
+		data:{ results: jsonArr, text: 'name' },
+		placeholder: "From Location",
+		minimumResultsForSearch: 2,
+		formatResult: function(result) {
+			if ( ! isJsonString(result.id))
+				result.id = JSON.stringify(result.id);
+				return result.name;
+		}
+	});
+	
 } 
 
 function createTravelTypeDropDown(jsonTravelTypeArr){

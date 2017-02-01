@@ -302,21 +302,21 @@ function saveTravelSettleDetails(status){
 		}else{
 			currency_id = '-1';
 		}
-		if(j("#travelMode").select2('data') != null){
-			travelMode_id = j("#travelMode").select2('data').id;
-			travelMode_val = j("#travelMode").select2('data').name;
+		if(j("#travelModeForTS").select2('data') != null){
+			travelMode_id = j("#travelModeForTS").select2('data').id;
+			travelMode_val = j("#travelModeForTS").select2('data').name;
 		}else{
 			travelMode_id = '-1';
 		}
-		if(j("#travelCategory").select2('data') != null){
-			travelCategory_id = j("#travelCategory").select2('data').id;
-			travelCategory_val = j("#travelCategory").select2('data').name;
+		if(j("#travelCategoryForTS").select2('data') != null){
+			travelCategory_id = j("#travelCategoryForTS").select2('data').id;
+			travelCategory_val = j("#travelCategoryForTS").select2('data').name;
 		}else{
 			travelCategory_id = '-1';
 		}
-		if(j("#fromCitytown").select2('data') != null){
-			cityTown_id = j("#fromCitytown").select2('data').id;
-			cityTown_val = j("#fromCitytown").select2('data').name;
+		if(j("#Citytown").select2('data') != null){
+			cityTown_id = j("#Citytown").select2('data').id;
+			cityTown_val = j("#Citytown").select2('data').name;
 		}else{
 			cityTown_id = '-1';
 		}	
@@ -349,9 +349,9 @@ function saveTravelSettleDetails(status){
 					document.getElementById('expAmt').value = "";
 					j('#travelRequestName').select2('data', '');
 					j('#travelExpenseName').select2('data', '');
-					j('#travelMode').select2('data', '');
-					j('#travelCategory').select2('data', '');
-					j('#fromCitytown').select2('data', '');
+					j('#travelModeForTS').select2('data', '');
+					j('#travelCategoryForTS').select2('data', '');
+					j('#Citytown').select2('data', '');
 					j("label[for='startDate']").html("");
 					j("label[for='endDate']").html("");
 					smallImageTS.style.display = 'none';
@@ -1047,7 +1047,8 @@ function fetchTravelModeList(transaction, results) {
 		
 		jsonTrvlModeArr.push(jsonFindMode);
 	}
-	createTravelModeDown(jsonTrvlModeArr)
+	createTravelModeDown(jsonTrvlModeArr);
+    createTravelModeDownForTS(jsonTrvlModeArr);
 }
 
 function fetchTrvlCategoryList(transaction, results) {
@@ -1062,7 +1063,8 @@ function fetchTrvlCategoryList(transaction, results) {
 		
 		jsonCategoryArr.push(jsonFindCategory);
 	}
-	createCategoryDropDown(jsonCategoryArr)
+	createCategoryDropDown(jsonCategoryArr);
+    createCategoryDropDownForTS(jsonCategoryArr);
 }
 
 function fetchCityTownList(transaction, results) {
@@ -1077,7 +1079,8 @@ function fetchCityTownList(transaction, results) {
 		
 		jsonCityTownArr.push(jsonFindCityTown);
 	}
-	createCitytownDropDown(jsonCityTownArr)
+	createCitytownDropDown(jsonCityTownArr);
+    createCitytownDropDownForTS(jsonCityTownArr);
 }
 
 function fetchTrvlTypeList(transaction, results) {
