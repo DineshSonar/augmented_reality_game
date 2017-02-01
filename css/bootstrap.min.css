@@ -4942,7 +4942,7 @@ transition:transform .3s ease-out;
 }
 .modal-header {
 /*	min-height:16.43px;*/
-	padding:15px 0 0;
+	padding:0px 0 0;
 	border-bottom:1px solid #e5e5e5;
 	position:relative;
 }
