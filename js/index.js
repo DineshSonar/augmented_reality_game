@@ -1299,7 +1299,7 @@ function onloadTimePicker(){
 
   function getCatergoryBasedOnMode(){
 
- 	var modeID = j("#travelMode").select2('data').id;
+ 	var modeID = j("#travelModeForTS").select2('data').id;
      getCategoryFromDB(modeID);
  }
 
