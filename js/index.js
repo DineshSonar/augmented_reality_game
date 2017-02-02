@@ -2924,3 +2924,8 @@ function fetchBusiEmpAdv(){
       appPageHistory.push(pageRef);
 	 }
 
+function onloadDefaultValue(){
+    clickedFlagCar = false;
+    clickedFlagTicket = false;
+    clickedFlagHotel = false;
+}
