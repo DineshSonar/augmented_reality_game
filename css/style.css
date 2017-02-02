@@ -47,7 +47,7 @@ body  h1 {
 /*--- Navigation---*/
 .nav {
 	float: left;
-	width: 6%;
+	width: 100%;
 }
 .main-content {
     padding-top:3em;
@@ -623,7 +623,7 @@ color:#ffffff;
 .sap_tabs p {
     font-size: 1em;
     color: #3b4b5c;
-    line-height: 1.9em;
+    line-height: 1.2em;
 	padding: 1.55em 2em;
    font-weight:400;
 }
@@ -1125,7 +1125,7 @@ li.com a:hover{
 	height: 380px;
 }
 .ac-container input:checked ~ article.ac-medium{
-	height: 600px;
+	height: 630px;
 }
 .ac-container input:checked ~ article.ac-large{
 	height: 230px;

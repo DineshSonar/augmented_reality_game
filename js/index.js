@@ -1267,6 +1267,12 @@ function onloadTimePicker(){
 
   function getCatergoryBasedOnMode(){
 
+ 	var modeID = j("#travelMode").select2('data').id;
+     getCategoryFromDB(modeID);
+ }
+
+  function getCatergoryBasedOnModeForTS(){
+
  	var modeID = j("#travelModeForTS").select2('data').id;
      getCategoryFromDB(modeID);
  }
@@ -2868,7 +2874,7 @@ j.ajax({
 }
 
 function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("mySidenav").style.width = "230px";
 }
 
 function closeNav() {

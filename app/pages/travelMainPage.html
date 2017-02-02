@@ -5,7 +5,7 @@
                <ul class="resp-tabs-list">
 				 <li  class="active" class="resp-tab-item resp-tab-active" aria-controls="tab_item-0" role="tab" onclick ="addHeader();"> Travel Request</li>
                  <li class="resp-tab-item " aria-controls="tab_item-1" role="tab" onclick="addHeader();">Travel&nbsp;Expense</li>
-				 <li class="resp-tab-item " aria-controls="tab_item-2" role="tab" onclick ="" > sync</li>
+				 <li class="resp-tab-item " aria-controls="tab_item-2" role="tab" onclick ="fetchTravelSettlementExpFromMain();" > sync</li>
                 </ul>				  	 
 				<div class="resp-tabs-container">
                     
@@ -36,10 +36,10 @@
             </div>
           </div>
           <div class="col-lg-12">
-            <td id="myTab" class="nav">
-                <tr class="active" id="oneWay" onclick="resetRoundTrip();"><a href="#service-one" data-toggle="tab"><b>One Way</b></a></tr>
-                <tr id="roundTrip" onclick="resetOneTrip();"><a href="#service-two" data-toggle="tab"><b>Round Trip</b></a></tr>
-              </td>
+            <ul id="myTab" class="nav nav-tabs">
+              <li class="active" id="oneWay" onclick="resetRoundTrip();"><a href="#service-one" data-toggle="tab">One Way</a></li>
+              <li id="roundTrip" onclick="resetOneTrip();"><a href="#service-two" data-toggle="tab">Round Trip</a></li>
+            </ul>
             <div id="myTabContent" class="tab-content">
               <div class="tab-pane fade in active" id="service-one"> <i class="fa fa-gear pull-left fa-4x"></i>
                 <table class="table table-responsive">
@@ -68,7 +68,7 @@
 					</td>
                   </tr>
 				  </table>
-				  <p><font face="verdana" size="1" color="green">Specify only if you require travel desk to book any of these 3:</font></p>
+				  <p><font face="verdana" size="2" color="green">Specify only if you require travel desk to book any of these 3:</font></p>
 				  <table class="table table-responsive">
                   <tr>
                     <td id="carDisabled" style="width: 100px;"><img src="images/oldcarbnw.png" onclick="setBooleanValueCar();"></td>
@@ -180,10 +180,9 @@
 	j("#roundTripMode").change(function() {
 		 getRoundCatergoryBasedOnMode();
 	  });
-	 
-		
+         
 		onloadTravelData();
-    onloadTimePicker();
+        onloadTimePicker();
 	  </script> 
 
 </div>
@@ -262,7 +261,7 @@
       getModeCatergoryBasedOnExpenseName();
     });
      j("#travelModeForTS").change(function() {
-      getCatergoryBasedOnMode();
+      getCatergoryBasedOnModeForTS();
   });
   function validate()
   {
