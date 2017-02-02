@@ -1048,7 +1048,6 @@ function fetchTravelModeList(transaction, results) {
 		jsonTrvlModeArr.push(jsonFindMode);
 	}
 	createTravelModeDown(jsonTrvlModeArr);
-    createTravelModeDownForTS(jsonTrvlModeArr);
 }
 
 function fetchTrvlCategoryList(transaction, results) {
@@ -1064,7 +1063,6 @@ function fetchTrvlCategoryList(transaction, results) {
 		jsonCategoryArr.push(jsonFindCategory);
 	}
 	createCategoryDropDown(jsonCategoryArr);
-    createCategoryDropDownForTS(jsonCategoryArr);
 }
 
 function fetchCityTownList(transaction, results) {
@@ -1080,7 +1078,6 @@ function fetchCityTownList(transaction, results) {
 		jsonCityTownArr.push(jsonFindCityTown);
 	}
 	createCitytownDropDown(jsonCityTownArr);
-    createCitytownDropDownForTS(jsonCityTownArr);
 }
 
 function fetchTrvlTypeList(transaction, results) {
