@@ -1,12 +1,16 @@
+<script>
+	hideTRMenus();
+    hideEAMenus();
+</script>
 <div style="background-color: white;padding-left: 0px;height: 500px;padding-top: 40px;">
     				    <div class="col-md-4 skill-one">
 							    <div class="mid-menu">
 								   <span class="menu2"><lable>Sync Master</lable></span>
 								   <ul class="" style="display: block;">
 									<li><a onclick="synchronizeBEMasterData();">Sync Business Expense Master</a></li>   
-                                    <li><a onclick="synchronizeEAMasterData();" href="#">Pull Employee Advance</a></li>
-									<li><a onclick="synchronizeTRMasterData();"href="#">Sync Travel Master</a></li>  
-									<li><a onclick="synchronizeTRForTS();" href="#">Pull Travel Request to Settle</a></li>  
+                                    <li id="EaDisplayID" ><a onclick="synchronizeEAMasterData();" href="#">Pull Employee Advance</a></li>
+									<li id="TrRoleID"><a onclick="synchronizeTRMasterData();"href="#">Sync Travel Master</a></li>  
+									<li id="TsRoleID"><a onclick="synchronizeTRForTS();" href="#">Pull Travel Request to Settle</a></li>  
 								  </ul>
 								</div>
 							</div>

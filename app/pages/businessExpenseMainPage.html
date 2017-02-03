@@ -3,7 +3,7 @@
          <div id="horizontalTab" style="style= display: block;width: 100%;margin: 0px;padding-top: 24px;">
                <ul class="resp-tabs-list">
 				 <li class="active" class="resp-tab-item resp-tab-active" aria-controls="tab_item-0" role="tab" onclick ="addHeader();"> Business Expense</li>
-                 <li class="resp-tab-item " aria-controls="tab_item-1" role="tab" onclick ="addHeader();"> Employee Advance</li>
+                 <li id ="CategoryEAId" class="resp-tab-item " aria-controls="tab_item-1" role="tab" onclick ="addHeader();"> Employee Advance</li>
 				 <li class="resp-tab-item " aria-controls="tab_item-2" role="tab" onclick ="fetchBusiEmpAdv();" > sync</li>
                 </ul>				  	 
 				<div class="resp-tabs-container">
@@ -70,6 +70,7 @@
           </div>
           </div>
       <script>
+    hideEAIcons();
 var currentMonth;
 var currentDate;
 var currentYear;

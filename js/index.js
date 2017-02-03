@@ -2112,8 +2112,10 @@ function hideTRIcons(){
 function hideTRMenus(){
 	if(window.localStorage.getItem("TrRole") == "true"){
 		document.getElementById('TrRoleID').style.display="block";
+        document.getElementById('TsRoleID').style.display="block";
 	}else{
 		document.getElementById('TrRoleID').style.display="none";
+        document.getElementById('TsRoleID').style.display="none";
 	}
 }
 function validateValidMobileUser(){
