@@ -3060,8 +3060,8 @@ a.hvr-hollow:hover,a.hvr-hollow:focus,a.hvr-hollow:active {
 	}
 		body h1 {
 		margin: 1em 0 1em;
-		font-size:1.8em;
-		color: #34495e;
+		font-size:1.1em;
+		color: #14a6c5;
 	}
 }
 @media (max-width:384px){
