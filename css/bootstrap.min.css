@@ -2835,11 +2835,11 @@ padding-top:6px
 	text-decoration:none
 }
 .btn-group-lg > .btn, .btn-lg {
-    border-radius: 6px;
-    font-size: 18px;
+border-radius: 4px;
+    font-size: 16px;
     font-weight: bold;
     line-height: 1.0;
-    padding: 7px 7px;
+    padding: 6px 6px;
 }
 .btn-group-sm>.btn, .btn-sm {
 	padding:5px 10px;
