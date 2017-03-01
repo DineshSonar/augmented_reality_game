@@ -423,9 +423,9 @@ function fetchExpenseClaim() {
 				}
 				
 				var rowss = j('<tr></tr>').attr({ class: ["test"].join(' ') }).appendTo(mytable);
-		
-		        	j('<td></td>').attr({ class: ["expDate"].join(' ') }).text(newDateFormat).appendTo(rowss);	
-		        	j('<td></td>').attr({ class: ["expName"].join(' ') }).text(row.expName).appendTo(rowss);	
+                
+                    j('<td></td>').attr({ class: ["expDate"].join(' ') }).html('<p style="color: black;">'+newDateFormat+'</P>').appendTo(rowss);	
+		        	j('<td></td>').attr({ class: ["expName"].join(' ') }).html('<p style="color: black;">'+row.expName+'</P>').appendTo(rowss).appendTo(rowss);	
 				if(window.localStorage.getItem("MobileMapRole") == 'true')
 				{
 					if(row.expFromLoc != '' && row.expToLoc != '')
@@ -531,16 +531,17 @@ function fetchExpenseClaim() {
 			  var newDateFormat = reverseConvertDate(row.expDate.substring(0,2))+"-"+row.expDate.substring(3,5)+" "+row.expDate.substring(6,10);	  
 			  
 			  var rowss = j('<tr></tr>').attr({ class: ["test"].join(' ') }).appendTo(mytable);
+                
+              j('<td></td>').attr({ class: ["expDate"].join(' ') }).html('<p style="color: black;">'+newDateFormat+'</P>').appendTo(rowss);	
+		       j('<td></td>').attr({ class: ["expenseName"].join(' ') }).html('<p style="color: black;">'+row.expenseName+'</P>').appendTo(rowss).appendTo(rowss);
 		
-		        j('<td></td>').attr({ class: ["expDate"].join(' ') }).text(newDateFormat).appendTo(rowss);				
-				j('<td></td>').attr({ class: ["expenseName"].join(' ') }).text(row.expenseName).appendTo(rowss);
-				j('<td></td>').attr({ class: ["expAmt"].join(' ') }).html('<p>'+row.expAmt+' '+row.currencyName+'</P>').appendTo(rowss);
-				j('<td></td>').attr({ class: ["cityTownName"].join(' ') }).text(row.cityTownName).appendTo(rowss);
+				j('<td></td>').attr({ class: ["expAmt"].join(' ') }).html('<p style="color: black;">'+row.expAmt+' '+row.currencyName+'</P>').appendTo(rowss);
+				j('<td></td>').attr({ class: ["cityTownName"].join(' ') }).html('<p style="color: black;">'+row.cityTownName+'</P>').appendTo(rowss);
 				
 				if(row.tsExpAttachment.length == 0){
-				j('<td></td>').attr({ class: ["expNarration"].join(' ') }).html('<p>'+row.expNarration+'</P>').appendTo(rowss); 	
+				j('<td></td>').attr({ class: ["expNarration"].join(' ') }).html('<p style="color: black;">'+row.expNarration+'</P>').appendTo(rowss); 	
 				}else{
-				j('<td></td>').attr({ class: ["expNarration"].join(' ') }).html('<p>'+row.expNarration+'</P><img src="images/attach.png" width="25px" height="25px">').appendTo(rowss); 
+				j('<td></td>').attr({ class: ["expNarration"].join(' ') }).html('<p style="color: black;">'+row.expNarration+'</P><img src="images/attach.png" width="25px" height="25px">').appendTo(rowss); 
 				}
 				j('<td></td>').attr({ class: ["expDate1","displayNone"].join(' ') }).text(row.expDate).appendTo(rowss);
 				j('<td></td>').attr({ class: ["expAmt1","displayNone"].join(' ') }).text(row.expAmt).appendTo(rowss);
@@ -1742,9 +1743,8 @@ function fetchEmployeeAdvance() {
 				}
 				
 				var rowss = j('<tr></tr>').attr({ class: ["test"].join(' ') }).appendTo(mytable);
-		
-		        	j('<td></td>').attr({ class: ["expDate"].join(' ') }).text(newDateFormat).appendTo(rowss);	
-		        	j('<td></td>').attr({ class: ["expName"].join(' ') }).text(row.expName).appendTo(rowss);	
+				    j('<td></td>').attr({ class: ["expDate"].join(' ') }).html('<p style="color: black;">'+newDateFormat+'</P>').appendTo(rowss);	
+		        	j('<td></td>').attr({ class: ["expName"].join(' ') }).html('<p style="color: black;">'+row.expName+'</P>').appendTo(rowss).appendTo(rowss);	
 				if(window.localStorage.getItem("MobileMapRole") == 'true')
 				{
 					if(row.expFromLoc != '' && row.expToLoc != '')
@@ -1910,9 +1910,9 @@ function fetchBusinessExpNdEmployeeAdv() {
 				}
 				
 				var rowss = j('<tr></tr>').attr({ class: ["test"].join(' ') }).appendTo(mytable);
-		
-		        	j('<td></td>').attr({ class: ["expDate"].join(' ') }).text(newDateFormat).appendTo(rowss);	
-		        	j('<td></td>').attr({ class: ["expName"].join(' ') }).text(row.expName).appendTo(rowss);	
+                    j('<td></td>').attr({ class: ["expDate"].join(' ') }).html('<p style="color: black;">'+newDateFormat+'</P>').appendTo(rowss);	
+		        	j('<td></td>').attr({ class: ["expName"].join(' ') }).html('<p style="color: black;">'+row.expName+'</P>').appendTo(rowss).appendTo(rowss);
+			
 				if(window.localStorage.getItem("MobileMapRole") == 'true')
 				{
 					if(row.expFromLoc != '' && row.expToLoc != '')
@@ -2063,8 +2063,8 @@ function fetchExpenseClaimFromMain() {
 				
 				var rowss = j('<tr></tr>').attr({ class: ["test"].join(' ') }).appendTo(mytable);
 		
-		        	j('<td></td>').attr({ class: ["expDate"].join(' ') }).text(newDateFormat).appendTo(rowss);	
-		        	j('<td></td>').attr({ class: ["expName"].join(' ') }).text(row.expName).appendTo(rowss);	
+		        	j('<td></td>').attr({ class: ["expDate"].join(' ') }).html('<p style="color: black;">'+newDateFormat+'</P>').appendTo(rowss);	
+		        	j('<td></td>').attr({ class: ["expName"].join(' ') }).html('<p style="color: black;">'+row.expName+'</P>').appendTo(rowss).appendTo(rowss);	
 				if(window.localStorage.getItem("MobileMapRole") == 'true')
 				{
 					if(row.expFromLoc != '' && row.expToLoc != '')
@@ -2156,11 +2156,11 @@ function fetchTravelSettlementExpFromMain() {
 			  var newDateFormat = reverseConvertDate(row.expDate.substring(0,2))+"-"+row.expDate.substring(3,5)+" "+row.expDate.substring(6,10);	  
 			  
 			  var rowss = j('<tr></tr>').attr({ class: ["test"].join(' ') }).appendTo(mytable);
-		
-		        j('<td></td>').attr({ class: ["expDate"].join(' ') }).text(newDateFormat).appendTo(rowss);				
-				j('<td></td>').attr({ class: ["expenseName"].join(' ') }).text(row.expenseName).appendTo(rowss);
+                
+                j('<td></td>').attr({ class: ["expDate"].join(' ') }).html('<p style="color: black;">'+newDateFormat+'</P>').appendTo(rowss);	
+		        j('<td></td>').attr({ class: ["expenseName"].join(' ') }).html('<p style="color: black;">'+row.expenseName+'</P>').appendTo(rowss).appendTo(rowss);	
 				j('<td></td>').attr({ class: ["expAmt"].join(' ') }).html('<p>'+row.expAmt+' '+row.currencyName+'</P>').appendTo(rowss);
-				j('<td></td>').attr({ class: ["cityTownName"].join(' ') }).text(row.cityTownName).appendTo(rowss);
+				j('<td></td>').attr({ class: ["cityTownName"].join(' ') }).html('<p style="color: black;">'+row.cityTownName+'</P>').appendTo(rowss);
 				
 				if(row.tsExpAttachment.length == 0){
 				j('<td></td>').attr({ class: ["expNarration"].join(' ') }).html('<p>'+row.expNarration+'</P>').appendTo(rowss); 	

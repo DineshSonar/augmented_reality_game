@@ -1,10 +1,10 @@
 <div class="deals">
-    <div class="sap_tabs">	
-         <div id="horizontalTab" style="style= display: block;width: 100%;margin: 0px;padding-top: 24px;">
-               <ul class="resp-tabs-list">
+    <div class="sap_tabs">
+         <div id="horizontalTab" style="style= display: block;width:100%;margin: 0px;padding-top: 24px;">
+               <ul id="tab" class="resp-tabs-list" style="style= width:100%;">
 				 <li class="active" class="resp-tab-item resp-tab-active" aria-controls="tab_item-0" role="tab" onclick ="addHeader();"> Business Expense</li>
-                 <li id ="CategoryEAId" class="resp-tab-item " aria-controls="tab_item-1" role="tab" onclick ="addHeader();"> Employee Advance</li>
-				 <li class="resp-tab-item " aria-controls="tab_item-2" role="tab" onclick ="fetchBusiEmpAdv();" > sync</li>
+                <li id ="CategoryEAId" class="resp-tab-item " aria-controls="tab_item-1" role="tab" onclick ="addHeader();"> Employee Advance</li>
+				 <li class="resp-tab-item" aria-controls="tab_item-2" role="tab" onclick ="fetchBusiEmpAdv();" > Sync</li>
                 </ul>				  	 
 				<div class="resp-tabs-container">
                     
@@ -283,6 +283,13 @@ var currentYear;
 								fit: true   // 100% fit in a container
 								});
 								});
+                                                    
+                          
+                    var n = $("#tab li:visible").length;
+                    var w = (100/n);
+                    var x = w-1;
+                    $("#tab li").width(x+'%');
+                          
 				     </script>	
         </div>			
     </div>
