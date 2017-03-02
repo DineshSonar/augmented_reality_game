@@ -1504,7 +1504,8 @@ function synchronizeTRForTS() {
 	
  function showHelpMenu(){
 		var headerBackBtn=defaultPagePath+'backbtnPage.html';
-     var pageRef=defaultPagePath+'helpMenuPage.html';
+    // var pageRef=defaultPagePath+'helpMenuPage.html';
+     var pageRef=defaultPagePath+'underConstruction.html';
 			j(document).ready(function() {
 				j('#mainHeader').load(headerBackBtn);
 				j('#mainContainer').load(pageRef);
