@@ -2,6 +2,16 @@
  	hideTRIcons();
     //hideEAIcons();
  </script>
+ <script type="text/javascript">
+		var lang = new Lang();
+		lang.dynamic('th', 'js/langpack/th.json');
+        lang.dynamic('ru','js/langpack/russian.json');
+        lang.dynamic('ae','js/langpack/arabic.json');
+		lang.init({
+			defaultLang: 'en'
+		});
+</script>
+
 
 <body style="padding:0px; margin:0px; background-color:#fff;font-family:'Open Sans',sans-serif,arial,helvetica,verdana">
 
@@ -133,18 +143,17 @@
     <div class="col-md-6 accordions">
          <section class="ac-container">
                <div>
-				<label onclick="createBusiExpMain();">Business Expense</label>
+				<label lang="en"onclick="createBusiExpMain();">Business Expense</label>
 				</div>
 				<div id="CategoryTrRoleID">
-				<label  onclick="createTravelMain();" style="background: #8fae51 url(images/ar-n.png) no-repeat right;" for="ac-2">Travel Management</label>
+				<label  lang="en" onclick="createTravelMain();" style="background: #8fae51 url(images/ar-n.png) no-repeat right;" for="ac-2">Travel Management</label>
                 </div>
 				<div>
-               <label onclick="createWallet();" style="background: #8775a7 url(images/ar-n.png) no-repeat right;" for="ac-3">My Receipts Wallet</label>
+               <label lang="en" onclick="createWallet();" style="background: #8775a7 url(images/ar-n.png) no-repeat right;" for="ac-3">My Receipts Wallet</label>
 				</div>
          </section>
     </div>
     <!-- #endregion Jssor Slider End -->
-    <center><a><p style="color: #19CFEF;font: caption;"> <b onclick="showHelpMenu()">Help</b></p></a></center>
-</body>    
-
+    <center><a><p style="color: #19CFEF;font: caption;"> <b lang="en" onclick="showHelpMenu()">Help</b></p></a></center>
+</body>
 
