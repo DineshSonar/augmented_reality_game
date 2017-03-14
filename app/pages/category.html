@@ -1,6 +1,6 @@
  <script>
  	hideTRIcons();
-    //hideEAIcons();
+    hideSmartClaims();
  </script>
  <script type="text/javascript">
 		var lang = new Lang();
@@ -10,6 +10,13 @@
 		lang.init({
 			defaultLang: 'en'
 		});
+            var smsWatchFlag=window.localStorage.getItem("smsWatchStatus");
+        var smartClaimsRole=window.localStorage.getItem("smartClaimsViaSMSOnMobile");
+         if(smartClaimsRole){
+             if(smsWatchFlag == false){
+                 startWatch();
+             }
+        }
 </script>
 
 
@@ -151,8 +158,12 @@
 				<div>
                <label lang="en" onclick="createWallet();" style="background: #8775a7 url(images/ar-n.png) no-repeat right;" for="ac-3">My Receipts Wallet</label>
 				</div>
+             <div id="smartClaimsID">
+               <label lang="en" onclick="viewMessages();" style="background: #b75353 url(images/ar-n.png) no-repeat right;" for="ac-3">Smart Expenses</label>
+                </div>
          </section>
     </div>
+<br>
     <!-- #endregion Jssor Slider End -->
     <center><a><p style="color: #19CFEF;font: caption;"> <b lang="en" onclick="showHelpMenu()">Help</b></p></a></center>
 </body>

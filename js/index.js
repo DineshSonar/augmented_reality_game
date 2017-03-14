@@ -3,8 +3,8 @@ var defaultPagePath='app/pages/';
 var headerMsg = "Expenzing";
 var urlPath;
 //var WebServicePath ='http://1.255.255.214:8085/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -27,6 +27,12 @@ var fileTempGalleryTS ="";
 var mapToCalcERAmt = new Map();
 var requestRunning = false;
 var flagForUnitEnable = false;
+var smsList = [];     
+var smsBodyString = "";  
+var smsToExpenseStr = "" ;
+var smsWatchFlagStatus = false;
+var expensePageFlag = '';		//S for smsExpenses And N for normal expenses
+var filtersStr = "";
 j(document).ready(function(){ 
 document.addEventListener("deviceready",loaded,false);
 });
@@ -77,6 +83,17 @@ function login()
 				synchronizeTRForTS();  
 			  }
                 synchronizeBEMasterData();
+                
+                
+            if(data.hasOwnProperty('smartClaimsViaSMSOnMobile') && 
+                 data.smartClaimsViaSMSOnMobile != null){
+                  if(data.EaInMobile){
+                 synchronizeWhiteListMasterData();
+	               startWatch();
+                  }
+                 }
+                
+			
 			}else if(data.Status == 'Failure'){
  			   successMessage = data.Message;
 			   if(successMessage.length == 0){
@@ -96,7 +113,7 @@ function login()
          }
    });
 
- }
+    }
  
 function commanLogin(){
  	var userName = document.getElementById("userName");
@@ -2933,4 +2950,226 @@ function onloadDefaultValue(){
     clickedFlagCar = false;
     clickedFlagTicket = false;
     clickedFlagHotel = false;
+}
+
+// changes for sms app
+	 function createSMS(){
+		 
+		 var headerBackBtn=defaultPagePath+'headerPageForWalletOperation.html';
+		 var pageRef=defaultPagePath+'sms.html';
+			j(document).ready(function() {
+				j('#mainHeader').load(headerBackBtn);
+				j('#mainContainer').load(pageRef);
+			});
+      appPageHistory.push(pageRef);
+	 }
+	function initApp() {
+    	updateStatus('init app called' );
+        	if (! SMS ) { alert( 'SMS plugin not ready' ); return; }
+        	updateStatus('SMS count: ' + smsList.length );
+            document.addEventListener('onSMSArrive',function(e){
+ 				saveIncomingSMSOnLocal(e);
+			 },false);
+            alert('end of init' );
+        }   
+
+
+	       function createEWallet(){
+		 
+		 var headerBackBtn=defaultPagePath+'headerPageForSMSOperation.html';
+		 var pageRef=defaultPagePath+'eWalletOptions.html';
+			j(document).ready(function() {
+				j('#mainHeader').load(headerBackBtn);
+				j('#mainContainer').load(pageRef);
+			});
+      appPageHistory.push(pageRef);
+	 }
+
+
+function viewMessages(){
+	// var e = { "data" : {"address": "paytm", "body":"You have made payment of Rs.135.00 to om rest.", "date_sent":1482401219880}}
+	// saveIncomingSMSOnLocal(e);
+
+	// var e1 = { "data" : {"address": "freecharge", "body":"Recharge of BSNL mobile for Rs.54 was successful. operator refrence number is 0154324", "date_sent":1482601219880}}
+	// saveIncomingSMSOnLocal(e1);
+	// var e2 = { "data" : {"address": "uber", "body":"You paid uber Rs.134.65 with your paytm wallet. reference number for the transaction is 93123a24", "date_sent":1482701219880}}
+	// saveIncomingSMSOnLocal(e2);
+	// var e3 = { "data" : {"address": "paytm", "body":"Hi,  your order #142592342342 of Rs. 2490 for 2 items is successful. we will let you know once seller ships it.", "date_sent":1482201219880}}
+	// saveIncomingSMSOnLocal(e3);
+	// var e4 = { "data" : {"address": "Creditcard", "body":"hi, payment of your electricity bill was successful for Rs.987.", "date_sent":1482101219880}}
+	// saveIncomingSMSOnLocal(e4);
+
+	// console.log("viewMessages  "+filtersStr)
+    var headerBackBtn=defaultPagePath+'headerPageForSMSOperation.html';
+    var pageRef=defaultPagePath+'fairMessageTable.html';
+	j(document).ready(function() {	
+		setTimeout(function(){
+              			 j('#mainHeader').load(headerBackBtn);
+						j('#mainContainer').load(pageRef);
+		 			}, 500);
+	});
+    appPageHistory.push(pageRef);
+    j('#loading_Cat').hide();
+}
+
+
+
+
+
+ function getFormattedDateFromMillisec(input){
+    
+	var time = new Date(input);
+	var theyear=time.getFullYear();
+	var themonth=time.getMonth()+1;
+	var thetoday=time.getDate();
+    var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    return thetoday+"-"+months[(themonth-1)]+"-"+theyear;
+}
+
+function saveIncomingSMSOnLocal(e){
+	var sms =e.data;
+	smsList.push(sms);
+	// console.log(sms);
+	var senderAddress = ""+sms.address;	
+	senderAddress = senderAddress.toLowerCase();
+		if(senderAddress.includes("paytm") || senderAddress.includes("freecharge") 
+		|| senderAddress.includes("uber")|| senderAddress.includes("Creditcard")){
+		// console.log("inside if condition")
+		if(smsFilterBox(sms.body))
+			saveSMS(sms);     
+	}
+}
+function startWatch() {
+        	if(SMS) SMS.startWatch(function(){
+        			window.localStorage.setItem("smsWatchStatus",true);
+        			//smsWatchFlagStatus = true;
+        			//alert(updateStrForSMS+'watching started'); 
+        	}, function(){
+        		window.localStorage.setItem("smsWatchStatus",false);
+        		//smsWatchFlagStatus = false ;
+        		//alert(updateStrForSMS+'failed to start watching');
+        	});
+}
+
+function parseIncomingSMSForAmount(input){
+	var amount= "";
+	if(input.includes("Rs.")){
+        var msg = input.split("Rs.")
+
+        var test  =  msg[1];
+		var rsExtractStr = test.trim().split(" ");
+		amount = rsExtractStr[0];
+	}
+	return amount;
+}
+
+function operationsOnSMS(){
+	j(document).ready(function(){
+		       j('#discard').on('click', function(e){ 
+				  if(requestRunning){
+						  	return;
+	    					}
+	    			  var pageRef=defaultPagePath+'fairMessageTable.html';
+					  if(j("#source tr.selected").hasClass("selected")){
+						  j("#source tr.selected").each(function(index, row) {
+						  	requestRunning = true;
+							  var smsID = j(this).find('td.smsId').text();
+  							  	discardMessages(smsID);
+  							  	 j('#mainContainer').load(pageRef);
+  							  	 var SMSSuccessMsgForDelete="message/s deleted successfully.";
+								 document.getElementById("syncSuccessMsg").innerHTML = SMSSuccessMsgForDelete;
+								 j('#syncSuccessMsg').hide().fadeIn('slow').delay(3000).fadeOut('slow');
+								 requestRunning = false;
+						  });
+					  }else{
+						 alert("Tap and select messages for save.");
+					  }
+			});
+
+	});
+
+	j('#saveSMS').on('click', function(e){ 
+				  if(requestRunning){
+						  	return;
+	    					}
+	    			  var pageRef=defaultPagePath+'smsToExpense.html';
+					  if(j("#source tr.selected").hasClass("selected")){
+						  j("#source tr.selected").each(function(index, row) {
+						  	requestRunning = true;
+							  var smsID = j(this).find('td.smsId').text();
+							  var smsText = j(this).find('td.smsText').text();
+							  var smsSentDate = j(this).find('td.smsSentDate').text();
+							  var smsAmount = j(this).find('td.smsAmount').text();
+							 	smsToExpenseStr = smsID+"_"+smsText+"_"+smsSentDate	+"_"+smsAmount;
+  							  	discardMessages(smsID);	 
+							  	j('#mainContainer').load(pageRef);
+  							   	//  console.log("inside of save header btn click mthd "+smsToExpenseStr)
+  								//  var SMSSuccessMsgForDelete="message/s deleted successfully.";
+								 // document.getElementById("syncSuccessMsg").innerHTML = SMSSuccessMsgForDelete;
+								 // j('#syncSuccessMsg').hide().fadeIn('slow').delay(3000).fadeOut('slow');
+								 requestRunning = false;
+						  });
+					  }else{
+						 alert("Tap and select messages for save.");
+					  }
+	});
+}
+
+function smsFilterBox(smsText){
+	var filtersStr = window.localStorage.getItem("SMSFilterationStr");
+	//console.log("filtersStr  "+filtersStr)
+	var blockedWordsStr = filtersStr.split("@")[0];
+	var allowedWordsStr = filtersStr.split("@")[1];
+	var returnFlag = false;
+	var blockedFlag = false;
+	var blockedWords = blockedWordsStr.split("$");
+	smsText = smsText.toLowerCase();
+
+	for (var i = 0; i < blockedWords.length-1; i++) {
+		var word= blockedWords[i].toLowerCase();
+		//console.log("blockedWords  "+word)
+		if(smsText.includes(word)){
+			// console.log("blockedWord included "+word)
+			blockedFlag = true;
+			break;
+		}
+	}
+	if(!blockedFlag){
+		var allowedWords = allowedWordsStr.split("$");
+		for (var i = 0; i < allowedWords.length-1; i++) {
+			var word = allowedWords[i].toLowerCase();
+			//console.log("allowed  "+word)
+			if(smsText.includes(word)){
+				// console.log("allowed included "+word)
+				returnFlag = true;
+				break;
+			}
+		}
+	}else{
+		returnFlag = false;
+	}
+	return returnFlag;
+}
+
+function getExpenseDateFromSMS(input){
+	// converts date from dd-MMM-yyyy to mm/dd/yyyy 
+	var date = new Date(input);
+
+	return (date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear();
+}
+function hideSmartClaims(){
+	if(window.localStorage.getItem("smartClaimsViaSMSOnMobile") == "true"){
+		document.getElementById('smartClaimsID').style.display="";		
+	}else{
+		document.getElementById('smartClaimsID').style.display="none";
+	}
+}
+
+function hideMultilanguage(){
+	if(window.localStorage.getItem("multiLangInMobile") == "true"){
+		document.getElementById('multiLang').style.display="block";
+	}else{
+		document.getElementById('multiLang').style.display="none";
+	}
 }

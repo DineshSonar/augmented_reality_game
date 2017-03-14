@@ -116,7 +116,10 @@
         "Travel Required Expenses not synchronized successfully.":"Путешествия Необходимые расходы не были успешно синхронизированы.",
         "Voucher No.":"Номер ваучера",
         "Currently this page is under construction.":"На данный момент эта страница находится в стадии строительства.",
-        "You must enter inputs!":"Вы должны ввести входы!"
+        "You must enter inputs!":"Вы должны ввести входы!",
+        "Settings":"Настройки",
+        "Smart Expenses":"Умные расходы",
+        "Select Language":"Выберите язык"
 	},
 	"regex": [
 		["Enter your user name","Введите имя пользователя"],

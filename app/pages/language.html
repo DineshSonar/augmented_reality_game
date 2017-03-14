@@ -1,0 +1,45 @@
+<script type="text/javascript">
+		var lang = new Lang();
+		lang.dynamic('th', 'js/langpack/th.json');
+        lang.dynamic('ru','js/langpack/russian.json');
+        lang.dynamic('ae','js/langpack/arabic.json');
+		lang.init({
+			defaultLang: 'en'
+		});
+</script>
+<div class="Table">
+	<center><a><p style="color: #19CFEF;font: caption;" onclick="">Language</p></a></center>
+	<div class="Row" style="border-bottom: 1px solid #e5e5e5;">
+        <div class="Cell" >
+		<a onclick="setEnglish();"><p class="addenglishflag" ></p><span style="color: #14a6c5;">English</span></a>
+		</div>
+        <div class="Cell" >
+		<a onclick="setArabic();"><p class="addarabicflag" ></p><span style="color: #14a6c5;"> Arabic</span></a>
+		</div>
+		<div class="Cell" >
+		<a onclick="setRussian();"><p class="addrussianflag" ></p><span style="color: #14a6c5;">Russian</span></a>
+		</div>
+	</div>
+  
+	
+	<div>
+	  <div style="display:none" id="loading_Cat" >
+            <img src="images/loading2.gif" id="loading-image_Cat" alt="Loading..." >
+	  </div>
+	</div>
+
+</div>
+<script>
+    
+    function setEnglish(){
+         window.lang.change('en');
+    }
+    
+        function setArabic(){
+         window.lang.change('ae');
+    }
+    
+        function setRussian(){
+         window.lang.change('ru');
+    }
+</script>

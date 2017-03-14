@@ -40,7 +40,9 @@ var app = {
 			 goBackEvent();
 		  }, false);
 		  validateValidMobileUser();
-		  
+		  document.addEventListener('onSMSArrive',function(e){
+			 	saveIncomingSMSOnLocal(e);
+			 },false);
 		  }
 };
 
@@ -154,6 +156,8 @@ if (window.openDatabase) {
         t.executeSql("CREATE TABLE IF NOT EXISTS advanceType (advancetypeID INTEGER PRIMARY KEY ASC, advancetype TEXT)");
         t.executeSql("CREATE TABLE IF NOT EXISTS employeeAdvanceDetails (empAdvID INTEGER PRIMARY KEY ASC, emplAdvVoucherNo TEXT,empAdvTitle TEXT,Amount Double)");
         t.executeSql("CREATE TABLE IF NOT EXISTS currencyConversionMst (currencyCovId INTEGER PRIMARY KEY ASC, currencyId INTEGER REFERENCES currencyMst(currencyId), defaultcurrencyId INTEGER ,conversionRate Double)");
+        t.executeSql("CREATE TABLE IF NOT EXISTS smsMaster (smsId INTEGER PRIMARY KEY ASC, smsText TEXT,senderAddr TEXT,smsSentDate TEXT,smsAmount TEXT)");
+		t.executeSql("CREATE TABLE IF NOT EXISTS smsScrutinizerMst (ID INTEGER PRIMARY KEY ASC, filterText TEXT, filterFlag TEXT, status TEXT)");
     });
 } else {
     alert(window.lang.translate('WebSQL is not supported by your browser!'));
@@ -1116,6 +1120,8 @@ function resetUserSessionDetails(){
 	 window.localStorage.removeItem("Password");
 	 window.localStorage.removeItem("MobileMapRole");
      window.localStorage.removeItem("EaInMobile");
+     window.localStorage.removeItem("multiLangInMobile");
+     window.localStorage.removeItem("localLanguage");
 	 dropAllTableDetails();
 }
 
@@ -1136,9 +1142,20 @@ function setUserSessionDetails(val,userJSON){
     }else{
      window.localStorage.setItem("EaInMobile",val.EaInMobile); 
     } 
+     if(!val.hasOwnProperty('smartClaimsViaSMSOnMobile')){
+      window.localStorage.setItem("smartClaimsViaSMSOnMobile",false);
+    }else{
+     window.localStorage.setItem("smartClaimsViaSMSOnMobile",val.smartClaimsViaSMSOnMobile); 
+    } 
+    if(!val.hasOwnProperty('multiLangInMobile')){
+    window.localStorage.setItem("multiLangInMobile",false);
+    }else{
+     window.localStorage.setItem("multiLangInMobile",val.multiLangInMobile); 
+    } 
     //End
 	 window.localStorage.setItem("UserName",userJSON["user"]);
 	 window.localStorage.setItem("Password",userJSON["pass"]);
+     window.localStorage.setItem("localLanguage",0);
 	
 }
 
@@ -1164,6 +1181,7 @@ function dropAllTableDetails(){
 		t.executeSql("DELETE TABLE travelExpenseNameMst");
 		t.executeSql("DELETE TABLE travelSettleExpDetails");
 		t.executeSql("DELETE TABLE travelRequestDetails");
+        
 	 });
 
 }
@@ -2039,7 +2057,7 @@ function fetchBusinessExpNdEmployeeAdv() {
 
 
 function fetchExpenseClaimFromMain() {
-    
+ j('#source').remove();
 	mytable = j('<table></table>').attr({ id: "source",class: ["table","table-striped","table-bordered"].join(' ') });
 	var rowThead = j("<thead></thead>").appendTo(mytable);
 	var rowTh = j('<tr></tr>').attr({ class: ["test"].join(' ') }).appendTo(rowThead);
@@ -2134,7 +2152,6 @@ function fetchExpenseClaimFromMain() {
 		 });
 	 });	 
 	 mytable.appendTo("#box");	
-    mainTable.appendTo("#box1");
     var header = defaultPagePath+'backbtnPage.html';
     j('#mainHeader').load(header);
  }
@@ -2219,3 +2236,198 @@ function fetchTravelSettlementExpFromMain() {
      var header = defaultPagePath+'backbtnPage.html';
     j('#mainHeader').load(header);
  }
+
+ //  SMS changes
+function saveSMS(sms){
+	j('#loading_Cat').show();
+	if (mydb) {
+		//save incoming sms
+	    var smsMsg = sms.body;
+		var senderAddress = ""+sms.address;	
+		senderAddress = senderAddress.toLowerCase();	
+		var smsSentDate = getFormattedDateFromMillisec(parseInt(sms.date_sent));
+		var smsAmount = parseIncomingSMSForAmount(smsMsg);
+		if (smsMsg != "") {
+	            mydb.transaction(function (t) {
+	                t.executeSql("INSERT INTO smsMaster (smsText,senderAddr,smsSentDate,smsAmount) VALUES (?,?,?,?)", 
+												[smsMsg,senderAddress,smsSentDate,smsAmount]);
+				});
+	            j('#loading_Cat').hide();
+	        } else {
+	        	j('#loading_Cat').hide();
+	        }
+	} else {
+        alert("db not found, your browser does not support web sql!");
+    }
+}
+
+
+function fetchSMSClaim() {
+	mytable = j('<table></table>').attr({ id: "source",class: ["table","table-striped","table-bordered"].join(' ') });
+	var rowThead = j("<thead></thead>").appendTo(mytable);
+	var rowTh = j('<tr></tr>').attr({ class: ["test"].join(' ') }).appendTo(rowThead);
+	
+	j('<th></th>').text("SMS Date").appendTo(rowTh);
+	j('<th></th>').text("Expense type").appendTo(rowTh); 	
+	j('<th></th>').text("Text").appendTo(rowTh);
+	j('<th></th>').text("Amt").appendTo(rowTh);
+	var cols = new Number(5);
+	 
+	mydb.transaction(function(t) {
+/*		 mydb.transaction(function (t) {
+	              t.executeSql("INSERT INTO smsMaster (smsId,smsSentDate,senderAddr,smsText,smsAmount) VALUES (?, ?, ?, ?,?)", 
+											[1,"23-Dec-2016","VM_IPAYTM","successfully  Rs.600 ","600.00"]);
+				});*/
+		var headerOprationBtn;
+      t.executeSql('SELECT * FROM smsMaster;', [],
+		 function(transaction, result) {
+		  if (result != null && result.rows != null) {
+			  
+			for (var i = 0; i < result.rows.length; i++) {
+				var row = result.rows.item(i);
+				var smsAmount = parseIncomingSMSForAmount(row.smsText);
+				var rowss = j('<tr></tr>').attr({ class: ["test"].join(' ') }).appendTo(mytable);
+				j('<td></td>').attr({ class: ["smsSentDate",""].join(' ') }).text(row.smsSentDate).appendTo(rowss);
+				// j('<td></td>').attr({ class: ["senderAddr",""].join(' ') }).text(row.senderAddr).appendTo(rowss);
+				j(rowss).append('<td><img width="50px" height="50px" src="images/'+row.senderAddr+'.png"/></td>');
+				j('<td></td>').attr({ class: ["smsText",""].join(' ') }).text(row.smsText).appendTo(rowss);
+				j('<td></td>').attr({ class: ["smsAmount",""].join(' ') }).text(row.smsAmount).appendTo(rowss);
+				 // j(rowss).append('<td><input type = "text"  id = "amt" value= "'+ smsAmount +'" style = "width: 50px;"/></td>');
+				 j('<td></td>').attr({ class: ["smsId","displayNone"].join(' ') }).text(row.smsId).appendTo(rowss);
+				  j('<td></td>').attr({ class: ["sender","displayNone"].join(' ') }).text(row.senderAddr).appendTo(rowss);
+			}	
+					
+			j("#source tr").click(function(){ 
+				headerOprationBtn = defaultPagePath+'headerPageForSMSOperation.html';
+				if(j(this).hasClass("selected")){ 
+				var headerBackBtn=defaultPagePath+'headerPageForSMSOperation.html';
+					j(this).removeClass('selected');
+					j('#mainHeader').load(headerBackBtn);
+				}else{
+				if(j(this).text()=='DateExpense expid From/To LocAmt'){
+					
+				}else{
+					j('#mainHeader').load(headerOprationBtn);
+					j(this).addClass('selected');
+				}					
+				}								
+			});
+			}
+		 });
+	 });	 
+	 mytable.appendTo("#box");		 
+ }	
+
+
+function discardMessages(smsID){
+			mydb.transaction(function (t) {
+				t.executeSql("DELETE FROM smsMaster WHERE smsId=?", [smsID]);
+			});
+		}
+
+function getFiltrationConstraints(){
+	var blockedWordsList = 	"";
+	var allowedWordsList = "";
+	mydb.transaction(function(t) {
+		 t.executeSql('SELECT * FROM smsScrutinizerMst;', [],
+		 function(transaction, result) {
+		 	 if (result != null && result.rows != null) {
+			  
+				for (var i = 0; i < result.rows.length; i++) {
+					var row = result.rows.item(i);
+					var status = row.status;
+					var flag = row.filterFlag;
+					var filterText = row.filterText;
+
+					if(status == 1){
+						if(flag == 'b'){
+							blockedWordsList += filterText + "$";
+						}else if( flag == 'w' ){
+							allowedWordsList += filterText + "$"
+						}
+					}
+
+				}
+			}
+		 });
+	});
+	setTimeout(function(){
+		tempFilterStr = blockedWordsList+"@"+allowedWordsList;
+		if(tempFilterStr){
+			filtersStr = tempFilterStr;
+			window.localStorage.setItem("SMSFilterationStr",filtersStr);
+		}
+		return tempFilterStr
+	}, 50);
+}
+
+
+function synchronizeWhiteListMasterData() {
+	var jsonSentToSync=new Object();
+	
+	j('#loading_Cat').show();
+	var blockedWordsList = 	"";
+	var allowedWordsList = "";
+	if (mydb) {
+		j.ajax({
+			url: window.localStorage.getItem("urlPath")+"SyncWhiteListMasterWebService",
+			type: 'POST',
+			dataType: 'json',
+			crossDomain: true,
+			data: JSON.stringify(jsonSentToSync),
+			success: function(data) {
+				if(data.Status=='Success'){
+					mydb.transaction(function (t) {
+					t.executeSql("DELETE FROM smsScrutinizerMst");
+					var whiteListArray = data.WhiteListArray;
+						if(whiteListArray != null && whiteListArray.length > 0){
+							for(var i=0; i<whiteListArray.length; i++ ){
+								var msgArr = new Array();
+								msgArr = whiteListArray[i];
+								var wbl_id = msgArr.ID;
+								var filter_Text = msgArr.FilterText;
+								var filter_Flag = msgArr.FilterFlag;
+								var status = msgArr.Status;
+								 
+								t.executeSql("INSERT INTO smsScrutinizerMst (ID, filterText, filterFlag, status) VALUES (?, ?, ?, ?)", [wbl_id,filter_Text,filter_Flag,status]);
+								
+							}
+						}
+					});	
+					                      
+					j('#loading_Cat').hide(); 
+            		document.getElementById("syncSuccessMsg").innerHTML = "SMS Status Master synchronized successfully.";
+              		j('#syncSuccessMsg').hide().fadeIn('slow').delay(500).fadeOut('slow');
+		 	setTimeout(function(){
+              			//console.log("before getFiltrationConstraints call")
+		 		getFiltrationConstraints();
+		 	}, 2000);
+				}
+				else{
+					j('#loading_Cat').hide();
+					document.getElementById("syncFailureMsg").innerHTML = "SMS Status Master not synchronized successfully.";
+					j('#syncFailureMsg').hide().fadeIn('slow').delay(300).fadeOut('slow');
+					
+				}
+					
+			  },
+			  error:function(data) {
+				 alert("Error: Oops something is wrong, Please Contact System Administer");
+			  }
+			});			
+	} else {
+        alert("db not found, your browser does not support web sql!");
+    }
+	
+}
+
+ function showMultiLanguag(){
+		var headerBackBtn=defaultPagePath+'backbtnPage.html';
+    // var pageRef=defaultPagePath+'helpMenuPage.html';
+     var pageRef=defaultPagePath+'multiLanguage.html';
+			j(document).ready(function() {
+				j('#mainHeader').load(headerBackBtn);
+				j('#mainContainer').load(pageRef);
+			});
+   appPageHistory.push(pageRef);
+	}
