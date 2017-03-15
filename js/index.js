@@ -2,9 +2,9 @@ var j = jQuery.noConflict();
 var defaultPagePath='app/pages/';
 var headerMsg = "Expenzing";
 var urlPath;
-var WebServicePath ='http://1.255.255.214:8085/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath ='http://1.255.255.214:8085/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
-//var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -39,7 +39,6 @@ document.addEventListener("deviceready",loaded,false);
 
 function login()
    {
-
    	if(document.getElementById("userName")!=null){
     var userName = document.getElementById("userName");
 	}else if(document.getElementById("userName")!=null){
@@ -71,8 +70,7 @@ function login()
                        appPageHistory.push(pageRef);
                     setUserStatusInLocalStorage("Valid");
 			        setUserSessionDetails(data,jsonToBeSend);
-                    j('#loading').hide();
-                    
+                    j('#loading').hide();         
         }else{
             var headerBackBtn=defaultPagePath+'categoryMsgPage.html';
 	        var pageRef=defaultPagePath+'category.html';
@@ -126,7 +124,7 @@ function login()
          }
    });
 
-    }
+}
  
 function commanLogin(){
  	var userName = document.getElementById("userName");
