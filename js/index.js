@@ -2,9 +2,9 @@ var j = jQuery.noConflict();
 var defaultPagePath='app/pages/';
 var headerMsg = "Expenzing";
 var urlPath;
-//var WebServicePath ='http://1.255.255.214:8085/NexstepWebService/mobileLinkResolver.service';
+var WebServicePath ='http://1.255.255.214:8085/NexstepWebService/mobileLinkResolver.service';
 //var WebServicePath = 'http://live.nexstepapps.com:8284/NexstepWebService/mobileLinkResolver.service';
-var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
+//var WebServicePath ='http://1.255.255.36:9898/NexstepWebService/mobileLinkResolver.service';
 var clickedFlagCar = false;
 var clickedFlagTicket = false;
 var clickedFlagHotel = false;
@@ -50,8 +50,6 @@ function login()
     var jsonToBeSend=new Object();
     jsonToBeSend["user"] = userName.value;
     jsonToBeSend["pass"] = password.value;
-   	var headerBackBtn=defaultPagePath+'categoryMsgPage.html';
-	var pageRef=defaultPagePath+'category.html';
 	//setUrlPathLocalStorage(urlPath);
 	urlPath=window.localStorage.getItem("urlPath");
 	j('#loading').show();
@@ -63,6 +61,21 @@ function login()
          data: JSON.stringify(jsonToBeSend),
          success: function(data) {
          	if (data.Status == 'Success'){
+                
+                if(data.hasOwnProperty('multiLangInMobile') && data.multiLangInMobile != null &&
+                   data.multiLangInMobile){
+                       	var headerBackBtn=defaultPagePath+'withoutBckBtn.html';
+	                    var pageRef=defaultPagePath+'language.html';
+                    j('#mainHeader').load(headerBackBtn);
+                    j('#mainContainer').load(pageRef); 
+                       appPageHistory.push(pageRef);
+                    setUserStatusInLocalStorage("Valid");
+			        setUserSessionDetails(data,jsonToBeSend);
+                    j('#loading').hide();
+                    
+        }else{
+            var headerBackBtn=defaultPagePath+'categoryMsgPage.html';
+	        var pageRef=defaultPagePath+'category.html';
         	 j('#mainHeader').load(headerBackBtn);
              j('#mainContainer').load(pageRef);
               appPageHistory.push(pageRef);
@@ -92,7 +105,7 @@ function login()
 	               startWatch();
                   }
                  }
-                
+                }
 			
 			}else if(data.Status == 'Failure'){
  			   successMessage = data.Message;
@@ -3173,3 +3186,36 @@ function hideMultilanguage(){
 		document.getElementById('multiLang').style.display="none";
 	}
 }
+
+
+function populateMainPage(){
+    	j('#loading').show();
+    	var headerBackBtn=defaultPagePath+'categoryMsgPage.html';
+	    var pageRef=defaultPagePath+'category.html';
+    
+             j('#mainHeader').load(headerBackBtn);
+             j('#mainContainer').load(pageRef);
+              appPageHistory.push(pageRef);
+			  //addEmployeeDetails(data);
+                           
+                if(window.localStorage.getItem("EaInMobile") != null && 
+                 window.localStorage.getItem("EaInMobile")){
+                 synchronizeEAMasterData();
+               }
+            
+			  if(window.localStorage.getItem("TrRole") != null && 
+                 window.localStorage.getItem("TrRole")){
+				synchronizeTRMasterData();
+				synchronizeTRForTS();  
+			  }
+                synchronizeBEMasterData();
+                
+                
+            if(window.localStorage.getItem("smartClaimsViaSMSOnMobile") != null && 
+                 window.localStorage.getItem("smartClaimsViaSMSOnMobile")){
+                 synchronizeWhiteListMasterData();
+	               startWatch();
+                 }
+    
+         j('#loading').hide();
+     }

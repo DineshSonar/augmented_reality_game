@@ -37,16 +37,14 @@ j(document).ready(function() {
 j("#countries").msDropdown();
 var val = window.localStorage.getItem("localLanguage");
  var oHandler = j('#countries').msDropDown().data("dd");
-  if(oHandler) {
+/*  if(oHandler) {
     oHandler.set("selectedIndex", val);
-}    
+}  */  
     
   j("#countries").change(function() {
-      alert("befor");
       var oDropdown = j("#countries").msDropdown().data("dd");
       var lang = oDropdown.get("value");
       var selectedIndex = $("#countries").val();
-      alert("selectedIndex"+selectedIndex);
       window.localStorage.setItem("localLanguage",selectedIndex);
       window.lang.change(lang);
         });

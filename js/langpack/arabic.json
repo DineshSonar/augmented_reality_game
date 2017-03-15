@@ -119,7 +119,8 @@
         "You must enter inputs!":"يجب إدخال المدخلات",
         "Settings":"إعدادات",
         "Smart Expenses":"مصاريف الذكية",
-        "Select Language":"اختار اللغة"
+        "Select Language":"اختار اللغة",
+        "Language":"لغة"
 	},
 	"regex": [
 		["Enter your user name","أدخل اسم المستخدم الخاص بك"],

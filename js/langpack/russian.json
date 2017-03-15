@@ -119,7 +119,8 @@
         "You must enter inputs!":"Вы должны ввести входы!",
         "Settings":"Настройки",
         "Smart Expenses":"Умные расходы",
-        "Select Language":"Выберите язык"
+        "Select Language":"Выберите язык",
+        "Language":"Язык"
 	},
 	"regex": [
 		["Enter your user name","Введите имя пользователя"],
