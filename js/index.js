@@ -295,14 +295,13 @@ function isJsonString(str) {
 				
  
 function viewBusinessExp(){
-    var pageRef=defaultPagePath+'fairClaimTable.html';
-    var headerBackBtn=defaultPagePath+'headerPageForBEOperation.html';
+   var pageRef=defaultPagePath+'fairClaimTable.html';
+   //var headerBackBtn=defaultPagePath+'headerPageForBEOperation.html';
 	j(document).ready(function() {	
-		j('#mainHeader').load(headerBackBtn);
+		//j('#mainHeader').load(headerBackBtn);
 		j('#mainContainer').load(pageRef);
 	});
     appPageHistory.push(pageRef);
-    resetImageData();
     j('#loading_Cat').hide();
 }
 
@@ -1710,7 +1709,7 @@ function oprationOnExpenseClaim(){
 							displayEmpAdv();
 														  
 						  });
-					  }else{					
+					  }else{
 alert(window.lang.translate('Tap and select Expenses to send for Approval with server.'));
              }
 			});
@@ -2598,8 +2597,8 @@ function validateEmpAdvanceDetails(empAdvDate,empAdvTitle,empAdvjustification,em
 }
 
 
-function displayEmpAdvanceExp(){	 
-		 var headerBackBtn=defaultPagePath+'headerPageForBEOperation.html';
+function displayEmpAdvanceExp(){
+    var headerBackBtn=defaultPagePath+'headerPageForBEOperation.html';
      var pageRef=defaultPagePath+'availableEmpAdvance.html';
 			j(document).ready(function() {
 				j('#mainHeader').load(headerBackBtn);

@@ -1,23 +1,13 @@
-<!--
-<link rel="stylesheet" type="text/css" href="css/msdropdown/dd.css" />
-<script src="js/msdropdown/jquery.dd.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/msdropdown/flags.css" />-->
-<script>
-	oprationOnExpenseClaim();
-	//hideTRMenus();
-    //hideEAMenus();
-    hideMultilanguage();
-</script>
 <script type="text/javascript">
 		var lang = new Lang();
 		lang.dynamic('th', 'js/langpack/th.json');
         lang.dynamic('ru','js/langpack/russian.json');
         lang.dynamic('ae','js/langpack/arabic.json');
-        lang.dynamic('en','');
 		lang.init({
 			defaultLang: 'en'
 		});
 </script>
+
 <div class="topfixednavigate" >
 <a href="#" class="backarrowbtn">
 <img src="images/left-arrow.png" width="15px" height="25px" onclick="goBack();"/>
@@ -31,20 +21,20 @@
   <a href="#" onclick="showSyncMaster()" lang="en" >Sync Masters</a>
   <a href="#" id='multiLang' onclick="showMultiLanguag()" lang="en">Settings</a>
   <a href="#"  onclick="showHelpMenu()" lang="en">Help</a>
-<!--    <div style="text-align: center;padding-bottom: 15px;" >   
-<select name="countries" id="countries" style="width:98%;">
-      <option value='en' data-image="images/msdropdown/icons/blank.gif" data-imagecss="flag us" data-title="English" >English</option>
-      <option value='ae' data-image="images/msdropdown/icons/blank.gif" data-imagecss="flag ae" data-title="United Arab Emirates">United Arab Emirates</option>
-    <option value='ru' data-image="images/msdropdown/icons/blank.gif" data-imagecss="flag ru" data-title="Russian">Russian</option>
-</select>  
-</div>-->
+
 </spen>
 
 <span style="font-size:30px;cursor:pointer;position: absolute;left: auto;top: inherit;right: inherit;padding-right: 16px;padding-top: 10px;" align="right" onclick="openNav();"><img src="css/cssimages/nav-icon.png" width="30px" height="25px"/></span>
- <div lang="en" style="display:none" id="syncSuccessMsg" class="displaysynctext">
+ <div style="display:none" id="syncSuccessMsg" class="displaysynctext" lang="en">
                Expenses synchronized successfully.
   		</div>
-		<div lang="en" style="display:none" id="syncFailureMsg" class="displaysynctext">
+		<div style="display:none" id="syncFailureMsg" class="displaysynctext" lang="en">
                Expenses not synchronized successfully.
   		</div>
 </div>
+<script>
+	oprationOnExpenseClaim();
+	//hideTRMenus();
+    //hideEAMenus();
+    hideMultilanguage();
+</script>

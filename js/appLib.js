@@ -1743,10 +1743,9 @@ function populateEATitle(){
 }
 
 function fetchEmployeeAdvance() {
-    
   mytable = j('<table></table>').attr({ id: "source",class: ["table","table-striped","table-bordered"].join(' ') });
 	var rowThead = j("<thead></thead>").appendTo(mytable);
-	var rowTh = j('<tr ></tr>').attr({ class: ["test"].join(' ') }).appendTo(rowThead);
+	var rowTh = j('<tr></tr>').attr({ class: ["test"].join(' ') }).appendTo(rowThead);
 	
 	j('<th lang=\'en\'></th>').text("Date").appendTo(rowTh);
 	j('<th lang=\'en\'></th>').text("Expense Name").appendTo(rowTh);
