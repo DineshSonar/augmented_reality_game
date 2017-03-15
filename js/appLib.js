@@ -1138,8 +1138,12 @@ function setUserSessionDetails(val,userJSON){
 	 window.localStorage.setItem("BudgetingStatus",val.BudgetingStatus);
 	 window.localStorage.setItem("UnitId",val.UnitId);
 	 //For Mobile Google Map Role Start
-	 window.localStorage.setItem("MobileMapRole",val.MobileMapRole);
 	 //End
+     if(!val.hasOwnProperty('MobileMapRole')){
+      window.localStorage.setItem("MobileMapRole",false);
+    }else{
+     window.localStorage.setItem("MobileMapRole",val.MobileMapRole); 
+    } 
     //For EA in mobile
     if(!val.hasOwnProperty('EaInMobile')){
       window.localStorage.setItem("EaInMobile",false);
