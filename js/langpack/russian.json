@@ -90,7 +90,7 @@
         "synch fail.":"синхронизация терпеть неудачу.",
         "Tap and select My Receipts Wallet to synch with server.":"Нажмите и выберите Мои расписок Кошелек для синхронизации с сервером",
         "Advance Type":"авансировать тип",
-        "Expense Type":"Expense Тип",
+        "Expense Type":"Тип расходов",
         "Advance Date is required":"Предварительная дата требуется",
         "Advance Title is required":"Предварительная Название требуется",
         "justification is required":"обоснование необходимости",
@@ -120,7 +120,9 @@
         "Settings":"Настройки",
         "Smart Expenses":"Умные расходы",
         "Select Language":"Выберите язык",
-        "Language":"Язык"
+        "Language":"Язык",
+        "Amount should be numeric.":"Сумма должна быть числовой.",
+        "Amount should be greater than 0.":"Сумма должна быть больше 0."
 	},
 	"regex": [
 		["Enter your user name","Введите имя пользователя"],

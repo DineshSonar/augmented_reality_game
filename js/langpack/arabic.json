@@ -120,7 +120,9 @@
         "Settings":"إعدادات",
         "Smart Expenses":"مصاريف الذكية",
         "Select Language":"اختار اللغة",
-        "Language":"لغة"
+        "Language":"لغة",
+        "Amount should be numeric.":"وينبغي أن تكون كمية رقمية.",
+        "Amount should be greater than 0.":"وينبغي أن تكون كمية أكبر من 0."
 	},
 	"regex": [
 		["Enter your user name","أدخل اسم المستخدم الخاص بك"],
